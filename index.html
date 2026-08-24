@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#15120f" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -14,7 +14,11 @@
       --green:#75956f; --shadow:rgba(0,0,0,.34);
     }
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
+    html{
+      scroll-behavior:smooth;
+      max-width:100%;
+      overflow-x:hidden;
+    }
     body{
       margin:0; color:var(--ink); background:
         radial-gradient(circle at 80% -10%, rgba(157,61,47,.18), transparent 35rem),
@@ -28,7 +32,7 @@
     }
     a{color:var(--gold);text-decoration:none} a:hover{text-decoration:underline}
     button,input,select{font:inherit}
-    .wrap{max-width:1120px;margin:auto;padding:0 20px}
+    .wrap{width:100%;max-width:1120px;margin:auto;padding:0 20px;min-width:0}
     header{
       position:sticky; top:0; z-index:40; backdrop-filter:blur(12px);
       background:rgba(17,16,14,.88); border-bottom:1px solid var(--line);
@@ -64,16 +68,16 @@
     h1 span{color:var(--gold)}
     .lead{max-width:720px;color:#bdb3a6;font-size:17px;margin:0}
     .warning{display:inline-flex;gap:9px;margin-top:22px;padding:9px 12px;border-left:3px solid var(--red);background:#241713;color:#e7c8c0}
-    .dashboard{display:grid;grid-template-columns:1fr 260px;gap:24px;margin:18px 0 40px}
-    .panel{background:linear-gradient(180deg,rgba(31,27,23,.96),rgba(22,20,17,.96));border:1px solid var(--line);box-shadow:0 15px 35px var(--shadow);border-radius:10px}
+    .dashboard{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:24px;margin:18px 0 40px;min-width:0}
+    .panel{background:linear-gradient(180deg,rgba(31,27,23,.96),rgba(22,20,17,.96));border:1px solid var(--line);box-shadow:0 15px 35px var(--shadow);border-radius:10px;min-width:0;max-width:100%}
     .panel-pad{padding:18px}
-    .progress-row{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:11px}
-    .progress-track{height:11px;background:#0c0b0a;border:1px solid #302820;border-radius:99px;overflow:hidden}
+    .progress-row{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:11px;min-width:0}
+    .progress-track{width:100%;max-width:100%;height:11px;background:#0c0b0a;border:1px solid #302820;border-radius:99px;overflow:hidden}
     .progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--red),var(--gold));transition:width .25s}
     .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}
     .stat{padding:10px;background:#15120f;border:1px solid #302820;border-radius:7px;text-align:center}
     .stat b{display:block;font-size:18px;color:#e9d3a3}
-    .tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;min-width:0;max-width:100%}
     .filters{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
     .filters-wrap{position:relative}
     .mobile-actions{display:none}
@@ -166,15 +170,17 @@
       .warning{font-size:13px;margin-top:15px}
       .dashboard{margin:8px 0 28px;gap:12px}
       .panel{border-radius:8px}
-      .panel-pad{padding:13px}
+      .panel-pad{padding:13px;min-width:0;overflow:hidden}
       .progress-row{margin-bottom:8px}
-      .stats{gap:6px;margin-top:10px}
-      .stat{padding:8px 4px;font-size:12px}
+      .stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:10px;width:100%;min-width:0}
+      .stat{padding:8px 4px;font-size:12px;min-width:0;overflow:hidden}
       .stat b{font-size:17px}
       .tools{gap:6px;margin-top:10px}
       .search{flex:1 0 100%;min-width:0;height:42px;font-size:16px}
-      .tools .btn:not(#expandAll):not(#collapseAll){display:none}
-      .tools #expandAll,.tools #collapseAll{flex:1;height:40px}
+      .tools .btn{display:inline-flex;align-items:center;justify-content:center;min-width:0}
+      .tools #expandAll,.tools #collapseAll{flex:1 1 calc(50% - 3px);height:40px}
+      .tools #exportBtn,.tools #importBtn{flex:1 1 calc(50% - 3px);height:40px}
+      .tools #resetBtn{display:none}
       .filters-wrap{margin:0 -13px}
       .filters{
         flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;
@@ -234,6 +240,13 @@
       }
       .modal-card input{height:46px;font-size:16px}
       .modal-actions .btn{min-height:44px}
+      .dashboard,.panel,.panel-pad,.progress-row,.progress-track,.tools,.stats,.stat,.filters-wrap,.filters{
+        max-width:100%;
+        min-width:0;
+      }
+      .progress-row>*,.tools>*,.stats>*{min-width:0}
+      #progressText{white-space:nowrap;flex:0 0 auto}
+      .progress-row strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     }
   </style>
 </head>

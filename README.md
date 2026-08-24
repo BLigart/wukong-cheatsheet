@@ -9,6 +9,7 @@ Open `index.html` in any modern browser.
 Upload `index.html` to any static host (GitHub Pages, Netlify, Cloudflare Pages, etc.).
 
 ## Features
+- Samsung Internet / Galaxy mobile overflow fixes; Import and Export remain visible on phones
 - Mobile-first phone layout with larger tap targets
 - Sticky bottom navigation and one-tap "Next unchecked"
 - Horizontally scrollable filter chips on narrow screens
