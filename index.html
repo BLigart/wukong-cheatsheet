@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#15120f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Black Myth: Wukong Cheat Sheet</title>
   <style>
     :root{
@@ -42,6 +44,7 @@
     nav a{color:var(--muted);padding:9px 11px;border-radius:7px}
     nav a:hover{color:var(--ink);background:#211c17;text-decoration:none}
     .profilebar{display:flex;gap:7px;align-items:center}
+    .mobile-only{display:none}
     select,.btn,.search{
       background:#181512;color:var(--ink);border:1px solid var(--line);border-radius:7px;
     }
@@ -72,6 +75,9 @@
     .stat b{display:block;font-size:18px;color:#e9d3a3}
     .tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
     .filters{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+    .filters-wrap{position:relative}
+    .mobile-actions{display:none}
+    .bottom-nav{display:none}
     .filter-chip{
       border:1px solid var(--line);background:#15120f;color:#aaa094;border-radius:99px;
       padding:6px 10px;cursor:pointer;font-size:12px
@@ -107,6 +113,12 @@
     .task:last-child{border-bottom:0}
     .task input{margin-top:4px;width:16px;height:16px;accent-color:var(--red)}
     .task.done .task-text{text-decoration:line-through;color:#746d64}
+    .wiki-link{
+      color:#d8bd82;text-decoration:none;border-bottom:1px dotted #76613d;
+      padding-bottom:1px
+    }
+    .wiki-link:hover{color:#f0d89e;text-decoration:none;border-bottom-style:solid}
+    .wiki-link:after{content:" ↗";font-size:.78em;opacity:.65}
     .tag{font-size:11px;padding:2px 6px;border-radius:4px;border:1px solid #4b4034;color:#b9aa97;white-space:nowrap}
     .tag.miss{border-color:#784037;color:#e2a89b}
     .tag.boss{border-color:#6e5934;color:#dcc58d}
@@ -138,10 +150,90 @@
       nav{display:none}.profilebar{margin-left:auto}.dashboard{grid-template-columns:1fr}.toc{grid-template-columns:1fr 1fr}
     }
     @media(max-width:560px){
-      .wrap{padding:0 14px}.brand span{display:none}.topbar{gap:8px}.profilebar{gap:4px}
-      .profilebar .btn{padding:0 8px}.hero{padding-top:42px}.toc{grid-template-columns:1fr}
-      .stats{grid-template-columns:1fr 1fr 1fr}.info-grid{grid-template-columns:1fr}
-      .task{grid-template-columns:24px 1fr}.task .tag{grid-column:2}
+      body{padding-bottom:74px}
+      .wrap{padding:0 12px}
+      header{position:sticky;top:0}
+      .topbar{min-height:54px;gap:6px}
+      .brand span{display:none}
+      .seal{width:32px;height:32px}
+      .profilebar{margin-left:auto;gap:5px;min-width:0}
+      .profilebar select{max-width:128px;height:34px;padding:0 26px 0 8px}
+      .profilebar .btn{display:none}
+      .mobile-only{display:inline-flex}
+      .hero{padding:30px 0 22px}
+      h1{font-size:39px;line-height:1.02}
+      .lead{font-size:15px;line-height:1.45}
+      .warning{font-size:13px;margin-top:15px}
+      .dashboard{margin:8px 0 28px;gap:12px}
+      .panel{border-radius:8px}
+      .panel-pad{padding:13px}
+      .progress-row{margin-bottom:8px}
+      .stats{gap:6px;margin-top:10px}
+      .stat{padding:8px 4px;font-size:12px}
+      .stat b{font-size:17px}
+      .tools{gap:6px;margin-top:10px}
+      .search{flex:1 0 100%;min-width:0;height:42px;font-size:16px}
+      .tools .btn:not(#expandAll):not(#collapseAll){display:none}
+      .tools #expandAll,.tools #collapseAll{flex:1;height:40px}
+      .filters-wrap{margin:0 -13px}
+      .filters{
+        flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;
+        scrollbar-width:none;padding:10px 13px 3px;margin-top:0;
+        -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity
+      }
+      .filters::-webkit-scrollbar{display:none}
+      .filter-chip{
+        flex:0 0 auto;min-height:38px;padding:8px 12px;
+        scroll-snap-align:start;font-size:12px
+      }
+      .side{display:none}
+      .section-title{margin:27px 0 10px;align-items:center}
+      .section-title h2{font-size:25px}
+      .section-title small{display:none}
+      .toc{grid-template-columns:1fr;gap:6px}
+      .toc a{padding:11px 12px;font-size:14px}
+      .chapter{margin:9px 0;border-radius:8px}
+      .chapter-head{padding:13px 12px;grid-template-columns:minmax(0,1fr) auto}
+      .chapter-head h3{font-size:18px;line-height:1.2}
+      .chapter-head .meta{font-size:12px;margin-top:2px}
+      .chapter-body{padding:2px 10px 8px}
+      .task{
+        grid-template-columns:30px minmax(0,1fr);
+        gap:8px;padding:12px 2px;min-height:52px
+      }
+      .task input{width:20px;height:20px;margin:2px 0 0 2px}
+      .task .task-text{font-size:15px;line-height:1.45}
+      .task>span:last-child{grid-column:2;display:flex;gap:4px;flex-wrap:wrap}
+      .tag{font-size:10px;padding:2px 5px}
+      .wiki-link:after{font-size:.7em}
+      .info-grid{grid-template-columns:1fr}
+      .info-card{padding:14px}
+      details{padding:12px 0}
+      footer{padding-bottom:24px}
+      .mobile-actions{
+        display:flex;gap:7px;position:sticky;top:55px;z-index:30;
+        padding:7px 0;background:linear-gradient(180deg,rgba(17,16,14,.98),rgba(17,16,14,.86),transparent)
+      }
+      .mobile-actions .btn{flex:1;height:42px}
+      .bottom-nav{
+        display:grid;grid-template-columns:repeat(4,1fr);
+        position:fixed;left:0;right:0;bottom:0;z-index:70;
+        background:rgba(17,16,14,.96);backdrop-filter:blur(12px);
+        border-top:1px solid var(--line);padding:max(6px,env(safe-area-inset-bottom)) 6px calc(6px + env(safe-area-inset-bottom))
+      }
+      .bottom-nav a,.bottom-nav button{
+        min-height:48px;border:0;background:transparent;color:#aaa094;
+        display:flex;flex-direction:column;align-items:center;justify-content:center;
+        gap:2px;font-size:11px;text-decoration:none;border-radius:8px
+      }
+      .bottom-nav a:active,.bottom-nav button:active{background:#211c17;color:var(--ink)}
+      .bottom-nav .ico{font-size:18px;line-height:1}
+      .modal{align-items:end;padding:0}
+      .modal-card{
+        width:100%;border-radius:14px 14px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))
+      }
+      .modal-card input{height:46px;font-size:16px}
+      .modal-actions .btn{min-height:44px}
     }
   </style>
 </head>
@@ -159,6 +251,7 @@
       <select id="profileSelect" aria-label="Profile"></select>
       <button class="btn" id="addProfile">Add</button>
       <button class="btn" id="editProfile">Edit</button>
+      <button class="btn mobile-only" id="mobileProfileBtn">Profile</button>
     </div>
   </div>
 </header>
@@ -186,6 +279,7 @@
         <button class="btn" id="exportBtn">Export</button>
         <button class="btn" id="importBtn">Import</button>
       </div>
+      <div class="filters-wrap">
       <div class="filters" id="filters" aria-label="Checklist filters">
         <button class="filter-chip active" data-filter="all">All</button>
         <button class="filter-chip" data-filter="npc">NPCs</button>
@@ -200,12 +294,18 @@
         <button class="filter-chip" data-filter="secret">Secrets</button>
         <button class="filter-chip" data-filter="miss">Missables</button>
       </div>
+      </div>
     </div>
     <aside class="panel panel-pad side">
       <h3>How it works</h3>
       <p>Tick tasks as you play. Progress is stored in your browser only, just like the original checklist concept.</p>
       <button class="btn red" id="resetBtn">Reset this profile</button>
     </aside>
+  </div>
+
+  <div class="mobile-actions" aria-label="Mobile checklist actions">
+    <button class="btn" id="nextUnchecked">Next unchecked</button>
+    <button class="btn" id="mobileFilters">Filters</button>
   </div>
 
   <section id="playthrough">
@@ -317,6 +417,7 @@
     <div class="info-grid">
       <div class="info-card"><h3>Progress Philosophy</h3><p>This is a compact companion, not a frame-by-frame walkthrough. It prioritizes decisions, optional content and major rewards that are easy to forget while exploring.</p></div>
       <div class="info-card"><h3>Save Behavior</h3><p>Profiles and checks are stored in <code>localStorage</code>. Nothing is uploaded. Use Export before clearing browser data.</p></div>
+      <div class="info-card"><h3>Wiki Links</h3><p>Gold dotted names in checklist tasks open the matching Black Myth: Wukong community wiki detail page directly in a new tab.</p></div>
     </div>
   </section>
 
@@ -326,8 +427,16 @@
     <details><summary>Do I have to follow this exact order?</summary><p>No. Black Myth: Wukong allows revisiting earlier chapters from Keeper's Shrines, and many optional encounters can be done in different orders.</p></details>
     <details><summary>Can I track multiple runs?</summary><p>Yes. Use Add/Edit in the header to create profiles for different characters or NG+ cycles.</p></details>
     <details><summary>Can I back up progress?</summary><p>Yes. Export downloads a JSON backup. Import restores that file into this browser.</p></details>
+    <details><summary>What do the gold linked names do?</summary><p>They open the matching Black Myth: Wukong community wiki detail page directly in a new tab for that boss, NPC, item, armor piece, spell, Spirit, Curio or location.</p></details>
   </section>
 </main>
+
+<nav class="bottom-nav" aria-label="Mobile navigation">
+  <a href="#playthrough"><span class="ico">☰</span><span>Checklist</span></a>
+  <button type="button" id="bottomNext"><span class="ico">↓</span><span>Next</span></button>
+  <a href="#checklists"><span class="ico">✓</span><span>Lists</span></a>
+  <button type="button" id="bottomProfile"><span class="ico">●</span><span>Profile</span></button>
+</nav>
 
 <footer><div class="wrap">Fan-made checklist. Black Myth: Wukong and related names are property of their respective owners. Guide facts cross-checked against public walkthrough resources.</div></footer>
 
@@ -469,6 +578,162 @@ const chapters = [
 ]}
 ];
 
+const wikiBase = "https://blackmythwukong.fandom.com/wiki/";
+
+/*
+  Checklist wording -> canonical Fandom article slug.
+  Explicit slugs are used where the checklist phrase differs from the wiki title.
+  All links go directly to detail pages.
+*/
+const wikiEntities = [
+  // Bosses / enemies
+  ["Bullguard","Bullguard"],
+  ["Guangzhi","Guangzhi"],
+  ["Wandering Wight","Wandering_Wight"],
+  ["Lingxuzi","Lingxuzi"],
+  ["Guangmou","Guangmou"],
+  ["Whiteclad Noble","Whiteclad_Noble"],
+  ["Elder Jinchi","Elder_Jinchi"],
+  ["Black Wind King","Black_Wind_King"],
+  ["Black Bear Guai","Black_Bear_Guai"],
+  ["Lang-Li-Guhh-Baw","Lang-Li-Guhh-Baw"],
+  ["King of Flowing Sands","King_of_Flowing_Sands"],
+  ["Second Rat Prince","Second_Rat_Prince"],
+  ["First Prince of Flowing Sands","First_Prince_of_Flowing_Sands"],
+  ["Stone Vanguard","Stone_Vanguard"],
+  ["Shigandang","Shigandang"],
+  ["Tiger Vanguard","Tiger_Vanguard"],
+  ["Yellow-Robed Squire","Yellow-Robed_Squire"],
+  ["Fuban","Fuban"],
+  ["Yellow Wind Sage","Yellow_Wind_Sage"],
+  ["Kang-Jin Loong","Kang-Jin_Loong"],
+  ["Captain Wise-Voice","Captain_Wise-Voice"],
+  ["Kang-Jin Star","Kang-Jin_Star"],
+  ["Yin Tiger","Yin_Tiger"],
+  ["Green-Capped Martialist","Green-Capped_Martialist"],
+  ["Yellowbrow","Yellowbrow"],
+  ["Second Sister","Second_Sister"],
+  ["Venom Daoist","Venom_Daoist"],
+  ["Yellow Loong","Yellow_Loong"],
+  ["Scorpionlord","Scorpionlord"],
+  ["Duskveil","Duskveil"],
+  ["Hundred-Eyed Daoist Master","Hundred-Eyed_Daoist_Master"],
+  ["Pale-Axe Stalwart","Pale-Axe_Stalwart"],
+  ["Rusty-Gold Cart","Rusty-Gold_Cart"],
+  ["Crimson-Silver Cart","Crimson-Silver_Cart"],
+  ["Bishui Golden-Eyed Beast","Bishui_Golden-Eyed_Beast"],
+  ["Red Boy","Red_Boy"],
+  ["Yaksha King","Yaksha_King"],
+  ["Gold Armored Rhino","Gold_Armored_Rhino"],
+  ["Cloudtreading Deer","Cloudtreading_Deer"],
+  ["Feng-Tail General","Feng-Tail_General"],
+  ["Emerald-Armed Mantis","Emerald-Armed_Mantis"],
+  ["Giant Shigandang","Giant_Shigandang"],
+  ["Erlang, the Sacred Divinity","Erlang,_the_Sacred_Divinity"],
+  ["Red Loong","Red_Loong"],
+  ["Black Loong","Black_Loong"],
+  ["Cyan Loong","Cyan_Loong"],
+  ["Apramana Bat","Apramana_Bat"],
+
+  // NPCs / characters
+  ["Horse Guai","Horse_Guai"],
+  ["Ma Tianba","Ma_Tianba"],
+  ["Yuan Shoucheng","Yuan_Shoucheng"],
+  ["Shen Monkey","Shen_Monkey"],
+  ["Xu Dog","Xu_Dog"],
+  ["Chen Loong","Chen_Loong"],
+  ["Daoist Mi","Daoist_Mi"],
+  ["Treasure Hunter","Treasure_Hunter"],
+  ["Zhu Bajie","Zhu_Bajie"],
+
+  // Transformations / spells
+  ["Immobilize","Immobilize"],
+  ["Red Tides","Red_Tides"],
+  ["Azure Dust","Azure_Dust"],
+  ["Ebon Flow","Ebon_Flow"],
+  ["Spell Binder","Spell_Binder"],
+  ["Golden Lining","Golden_Lining"],
+  ["Dark Thunder","Dark_Thunder"],
+  ["Ring of Fire","Ring_of_Fire"],
+
+  // Vessels / items / Curios / Gourds
+  ["Fireproof Mantle","Fireproof_Mantle"],
+  ["Wind Tamer","Wind_Tamer"],
+  ["Weaver's Needle","Weaver%27s_Needle"],
+  ["Plantain Fan","Plantain_Fan"],
+  ["Loong Scales","Loong_Scales"],
+  ["Auspicious Lantern","Auspicious_Lantern"],
+  ["Golden Carp","Golden_Carp"],
+  ["Stained Jade Gourd","Stained_Jade_Gourd"],
+  ["Violet Hail","Violet_Hail"],
+  ["Five Skandhas Pill","Five_Skandhas_Pill"],
+  ["Mind Core","Mind_Core"],
+  ["Buddha's Eyeball","Buddha%27s_Eyeball"],
+  ["Sobering Stone","Sobering_Stone"],
+  ["Special-made Bone Strengthening Pellet","Special-made_Bone-Strengthening_Pellet"],
+  ["Bull King's Iron Horn","Bull_King%27s_Iron_Horn"],
+  ["Jingubang","Jingubang"],
+
+  // Armor / equipment
+  ["Pilgrim armor set","Pilgrim_Armor_Set"],
+  ["Iron-Tough armor set","Iron-Tough_Armor_Set"],
+  ["Venomous Armguard","Venomous_Armguard"],
+  ["Bull King armor","Bull_King_Armor_Set"],
+  ["Gold Suozi Armor","Gold_Suozi_Armor"],
+  ["Lotus Silk Cloudtreaders","Lotus_Silk_Cloudtreaders"],
+  ["Golden Feng-Tail Crown","Golden_Feng-Tail_Crown"],
+  ["Dian-Cui Loong-Soaring Bracers","Dian-Cui_Loong-Soaring_Bracers"],
+
+  // Quest / collectible names / locations
+  ["Skandha of Form","Skandha_of_Form"],
+  ["Skandha of Feeling","Skandha_of_Feeling"],
+  ["Skandha of Thought","Skandha_of_Thought"],
+  ["Skandha of Choice","Skandha_of_Choice"],
+  ["Skandha of Consciousness","Skandha_of_Consciousness"],
+  ["Purple Talisman","Purple_Talisman"],
+  ["Old Rattle-Drum","Old_Rattle-Drum"],
+  ["Ruyi Scroll","Ruyi_Scroll"],
+  ["Zodiac Village","Zodiac_Village"],
+  ["Ancient Guanyin Temple","Ancient_Guanyin_Temple"],
+  ["Kingdom of Sahali","Kingdom_of_Sahali"],
+  ["Purple Cloud Mountain","Purple_Cloud_Mountain"],
+  ["Bishui Cave","Bishui_Cave"],
+  ["Great Pagoda","Great_Pagoda"],
+  ["Mount Mei","Mount_Mei"]
+].sort((a,b)=>b[0].length-a[0].length);
+
+function wikiUrl(slug){
+  // Slugs above are already MediaWiki-safe; apostrophes are encoded explicitly.
+  return wikiBase + slug;
+}
+function escapeRegex(str){
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+function linkifyWiki(text){
+  let parts=[{text, html:false}];
+  wikiEntities.forEach(([name,slug])=>{
+    const re=new RegExp(`\\b(${escapeRegex(name)})\\b`,"gi");
+    const next=[];
+    parts.forEach(part=>{
+      if(part.html){next.push(part);return;}
+      let last=0, m;
+      while((m=re.exec(part.text))!==null){
+        if(m.index>last) next.push({text:part.text.slice(last,m.index),html:false});
+        const shown=m[0];
+        next.push({
+          text:`<a class="wiki-link" href="${wikiUrl(slug)}" target="_blank" rel="noopener noreferrer" title="Open ${name} on the Wukong Wiki">${shown}</a>`,
+          html:true
+        });
+        last=m.index+shown.length;
+      }
+      if(last<part.text.length) next.push({text:part.text.slice(last),html:false});
+    });
+    parts=next;
+  });
+  return parts.map(p=>p.html?p.text:p.text
+    .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")).join("");
+}
+
 const state = {
   profiles: JSON.parse(localStorage.getItem("wukongProfiles") || '["Journey 1"]'),
   active: localStorage.getItem("wukongActive") || "Journey 1",
@@ -499,13 +764,19 @@ function render(){
     box.innerHTML=`<div class="chapter-head"><div><h3>${ch.title}</h3><div class="meta">${ch.region}</div></div><span class="pill chapter-count"></span></div><div class="chapter-body"></div>`;
     const body=box.querySelector(".chapter-body");
     ch.tasks.forEach((t,i)=>{
-      const row=document.createElement("label");row.className="task";row.dataset.text=t[0].toLowerCase();
+      const row=document.createElement("div");row.className="task";row.dataset.text=t[0].toLowerCase();
       const tags=t[1].split(" ").filter(Boolean);
       row.dataset.tags=tags.join(" ");
       const tagNames={miss:"MISSABLE",npc:"NPC",boss:"BOSS",armor:"ARMOR",gear:"GEAR",quest:"QUEST",secret:"SECRET",spirit:"SPIRIT",transform:"TRANSFORM",curio:"CURIO",collectible:"COLLECTIBLE"};
       const tagHtml=tags.map(x=>`<span class="tag ${x}">${tagNames[x]||x.toUpperCase()}</span>`).join(" ");
-      row.innerHTML=`<input type="checkbox" ${current()[key(ch,i)]?"checked":""}><span class="task-text">${t[0]}</span><span>${tagHtml}</span>`;
+      row.innerHTML=`<input aria-label="Mark checklist item complete" type="checkbox" ${current()[key(ch,i)]?"checked":""}><span class="task-text">${linkifyWiki(t[0])}</span><span>${tagHtml}</span>`;
       if(current()[key(ch,i)]) row.classList.add("done");
+      row.addEventListener("click",e=>{
+        if(e.target.closest("a") || e.target.matches("input")) return;
+        const cb=row.querySelector("input");
+        cb.checked=!cb.checked;
+        cb.dispatchEvent(new Event("change",{bubbles:true}));
+      });
       row.querySelector("input").addEventListener("change",e=>{
         current()[key(ch,i)]=e.target.checked; row.classList.toggle("done",e.target.checked); save(); updateStats();
       });
@@ -609,6 +880,44 @@ document.getElementById("importFile").addEventListener("change",async e=>{
   }catch{alert("Could not import that backup file.");}
   e.target.value="";
 });
+
+function goToNextUnchecked(){
+  const visible = [...document.querySelectorAll(".task:not(.hidden)")];
+  if(!visible.length) return;
+  const startY = window.scrollY + 90;
+  let target = visible.find(t=>{
+    const cb=t.querySelector('input[type="checkbox"]');
+    return !cb.checked && t.getBoundingClientRect().top + window.scrollY > startY;
+  });
+  if(!target){
+    target = visible.find(t=>!t.querySelector('input[type="checkbox"]').checked);
+  }
+  if(!target){
+    alert("All visible checklist items are complete.");
+    return;
+  }
+  const chapter=target.closest(".chapter");
+  if(chapter) chapter.classList.remove("collapsed");
+  target.scrollIntoView({behavior:"smooth",block:"center"});
+  target.animate(
+    [{background:"rgba(199,168,102,.20)"},{background:"transparent"}],
+    {duration:1100,easing:"ease-out"}
+  );
+}
+document.getElementById("nextUnchecked")?.addEventListener("click",goToNextUnchecked);
+document.getElementById("bottomNext")?.addEventListener("click",goToNextUnchecked);
+
+function openProfileMobile(){
+  openModal("edit");
+}
+document.getElementById("mobileProfileBtn")?.addEventListener("click",openProfileMobile);
+document.getElementById("bottomProfile")?.addEventListener("click",openProfileMobile);
+
+document.getElementById("mobileFilters")?.addEventListener("click",()=>{
+  const filters=document.getElementById("filters");
+  filters?.scrollIntoView({behavior:"smooth",block:"center"});
+});
+
 render();
 </script>
 </body>
