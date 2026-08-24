@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#15120f" />
+  <title>Black Myth: Wukong Cheat Sheet</title>
+  <style>
+    :root{
+      --bg:#11100e; --panel:#1a1713; --panel2:#211c17; --ink:#eee6d8;
+      --muted:#a99f92; --line:#3b3128; --gold:#c7a866; --red:#9d3d2f;
+      --green:#75956f; --shadow:rgba(0,0,0,.34);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; color:var(--ink); background:
+        radial-gradient(circle at 80% -10%, rgba(157,61,47,.18), transparent 35rem),
+        linear-gradient(180deg,#17130f 0,#11100e 42rem,#0c0b0a 100%);
+      font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    }
+    body:before{
+      content:""; position:fixed; inset:0; pointer-events:none; opacity:.06;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+      z-index:99;
+    }
+    a{color:var(--gold);text-decoration:none} a:hover{text-decoration:underline}
+    button,input,select{font:inherit}
+    .wrap{max-width:1120px;margin:auto;padding:0 20px}
+    header{
+      position:sticky; top:0; z-index:40; backdrop-filter:blur(12px);
+      background:rgba(17,16,14,.88); border-bottom:1px solid var(--line);
+    }
+    .topbar{min-height:64px;display:flex;align-items:center;gap:18px}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.04em;white-space:nowrap}
+    .seal{
+      width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--red);
+      color:#f2d6cd;background:rgba(157,61,47,.15);font-family:serif;font-size:19px;
+      transform:rotate(-3deg)
+    }
+    nav{display:flex;gap:4px;flex:1}
+    nav a{color:var(--muted);padding:9px 11px;border-radius:7px}
+    nav a:hover{color:var(--ink);background:#211c17;text-decoration:none}
+    .profilebar{display:flex;gap:7px;align-items:center}
+    select,.btn,.search{
+      background:#181512;color:var(--ink);border:1px solid var(--line);border-radius:7px;
+    }
+    select,.btn{height:36px;padding:0 10px}
+    .btn{cursor:pointer}.btn:hover{border-color:#6d5947;background:#211c17}
+    .btn.red{border-color:#6d3229;color:#f0c5bd}
+    .hero{padding:64px 0 35px;position:relative;overflow:hidden}
+    .hero:after{
+      content:"";position:absolute;right:-3rem;top:1rem;width:390px;height:270px;opacity:.14;
+      background:
+        radial-gradient(ellipse at 60% 78%, #d0c6b5 0 1%, transparent 2%),
+        linear-gradient(145deg,transparent 40%,#d0c6b5 41% 43%,transparent 44%),
+        linear-gradient(35deg,transparent 45%,#d0c6b5 46% 48%,transparent 49%);
+      filter:blur(.3px);transform:rotate(-8deg)
+    }
+    h1{font-family:Georgia,serif;font-size:clamp(38px,6vw,66px);line-height:.96;margin:0 0 15px;max-width:760px}
+    h1 span{color:var(--gold)}
+    .lead{max-width:720px;color:#bdb3a6;font-size:17px;margin:0}
+    .warning{display:inline-flex;gap:9px;margin-top:22px;padding:9px 12px;border-left:3px solid var(--red);background:#241713;color:#e7c8c0}
+    .dashboard{display:grid;grid-template-columns:1fr 260px;gap:24px;margin:18px 0 40px}
+    .panel{background:linear-gradient(180deg,rgba(31,27,23,.96),rgba(22,20,17,.96));border:1px solid var(--line);box-shadow:0 15px 35px var(--shadow);border-radius:10px}
+    .panel-pad{padding:18px}
+    .progress-row{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:11px}
+    .progress-track{height:11px;background:#0c0b0a;border:1px solid #302820;border-radius:99px;overflow:hidden}
+    .progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--red),var(--gold));transition:width .25s}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}
+    .stat{padding:10px;background:#15120f;border:1px solid #302820;border-radius:7px;text-align:center}
+    .stat b{display:block;font-size:18px;color:#e9d3a3}
+    .tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .filters{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+    .filter-chip{
+      border:1px solid var(--line);background:#15120f;color:#aaa094;border-radius:99px;
+      padding:6px 10px;cursor:pointer;font-size:12px
+    }
+    .filter-chip:hover{border-color:#6d5947;color:var(--ink)}
+    .filter-chip.active{background:#2a2119;color:#f0dfbd;border-color:#846d49}
+    .filter-chip[data-filter="npc"].active{border-color:#536d79}
+    .filter-chip[data-filter="armor"].active,.filter-chip[data-filter="gear"].active{border-color:#7b6741}
+    .search{height:38px;padding:0 12px;min-width:220px;flex:1}
+    .side h3{margin:0 0 8px;font-family:Georgia,serif}
+    .side p{color:var(--muted);margin:6px 0 15px}
+    section{scroll-margin-top:80px}
+    .section-title{display:flex;align-items:end;justify-content:space-between;gap:15px;margin:35px 0 14px}
+    .section-title h2{font:700 30px Georgia,serif;margin:0}
+    .section-title small{color:var(--muted)}
+    .toc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .toc a{border:1px solid var(--line);background:#171410;padding:10px 12px;border-radius:7px;color:#c9bcac}
+    .toc a:hover{border-color:#665443;color:var(--ink);text-decoration:none}
+    .chapter{margin:12px 0;border:1px solid var(--line);background:#151310;border-radius:9px;overflow:hidden}
+    .chapter-head{
+      display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;
+      padding:14px 16px;cursor:pointer;background:linear-gradient(90deg,#201b16,#181512);
+    }
+    .chapter-head h3{margin:0;font:700 21px Georgia,serif}
+    .chapter-head .meta{color:var(--muted);font-size:13px}
+    .pill{padding:3px 8px;border:1px solid #544637;border-radius:99px;color:#d6c7b5;font-size:12px}
+    .chapter-body{padding:6px 16px 14px}
+    .chapter.collapsed .chapter-body{display:none}
+    .task{
+      display:grid;grid-template-columns:24px 1fr auto;gap:9px;align-items:start;
+      padding:9px 3px;border-bottom:1px dashed #2b251f;
+    }
+    .task:last-child{border-bottom:0}
+    .task input{margin-top:4px;width:16px;height:16px;accent-color:var(--red)}
+    .task.done .task-text{text-decoration:line-through;color:#746d64}
+    .tag{font-size:11px;padding:2px 6px;border-radius:4px;border:1px solid #4b4034;color:#b9aa97;white-space:nowrap}
+    .tag.miss{border-color:#784037;color:#e2a89b}
+    .tag.boss{border-color:#6e5934;color:#dcc58d}
+    .tag.secret{border-color:#3f5d46;color:#a9c2aa}
+    .tag.npc{border-color:#45616d;color:#a8c8d2}
+    .tag.armor{border-color:#75613d;color:#e1c98e}
+    .tag.gear{border-color:#655844;color:#cfbea4}
+    .tag.quest{border-color:#624b6d;color:#cbb0d7}
+    .tag.spirit{border-color:#4b6472;color:#b1ceda}
+    .tag.transform{border-color:#684e72;color:#d5b7df}
+    .tag.curio{border-color:#6c5b38;color:#dfca8e}
+    .tag.collectible{border-color:#4f6653;color:#b7cfb9}
+    .hidden{display:none!important}
+    .info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .info-card{padding:16px;border:1px solid var(--line);background:#171410;border-radius:8px}
+    .info-card h3{margin:0 0 9px;font-family:Georgia,serif}
+    .info-card ul{margin:0;padding-left:18px;color:#c5b9aa}
+    details{border-top:1px solid var(--line);padding:13px 0}
+    summary{cursor:pointer;font-weight:700}
+    details p{color:#b9afa2}
+    footer{margin-top:50px;padding:28px 0 60px;border-top:1px solid var(--line);color:#827a70}
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.67);z-index:80;display:none;place-items:center;padding:20px}
+    .modal.open{display:grid}
+    .modal-card{width:min(460px,100%);background:#1a1713;border:1px solid #4c4035;border-radius:10px;padding:20px;box-shadow:0 30px 90px #000}
+    .modal-card h3{margin-top:0}
+    .modal-card input{width:100%;height:40px;background:#11100e;color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:0 10px}
+    .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}
+    @media(max-width:850px){
+      nav{display:none}.profilebar{margin-left:auto}.dashboard{grid-template-columns:1fr}.toc{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:560px){
+      .wrap{padding:0 14px}.brand span{display:none}.topbar{gap:8px}.profilebar{gap:4px}
+      .profilebar .btn{padding:0 8px}.hero{padding-top:42px}.toc{grid-template-columns:1fr}
+      .stats{grid-template-columns:1fr 1fr 1fr}.info-grid{grid-template-columns:1fr}
+      .task{grid-template-columns:24px 1fr}.task .tag{grid-column:2}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap topbar">
+    <div class="brand"><div class="seal">悟</div><span>WUKONG CHEAT SHEET</span></div>
+    <nav>
+      <a href="#playthrough">Playthrough</a>
+      <a href="#checklists">Checklists</a>
+      <a href="#information">Information</a>
+      <a href="#help">Help</a>
+    </nav>
+    <div class="profilebar">
+      <select id="profileSelect" aria-label="Profile"></select>
+      <button class="btn" id="addProfile">Add</button>
+      <button class="btn" id="editProfile">Edit</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Black Myth: <span>Wukong</span><br>Cheat Sheet</h1>
+    <p class="lead">A spoiler-aware playthrough checklist for the Destined One: progression, bosses, NPC dialogue, side quests, important armor/gear, Spirits, Transformations, Curios, secret areas, and easy-to-miss steps—saved locally per profile.</p>
+    <div class="warning">⚠ Contains gameplay and boss spoilers.</div>
+  </section>
+
+  <div class="dashboard">
+    <div class="panel panel-pad">
+      <div class="progress-row"><strong>Journey progress</strong><span id="progressText">0 / 0</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="stats">
+        <div class="stat"><b id="chapterStat">0/6</b>chapters</div>
+        <div class="stat"><b id="secretStat">0/5</b>secret areas</div>
+        <div class="stat"><b id="bossStat">0</b>boss tasks</div>
+      </div>
+      <div class="tools">
+        <input class="search" id="search" placeholder="Filter checklist…" />
+        <button class="btn" id="expandAll">Expand all</button>
+        <button class="btn" id="collapseAll">Collapse all</button>
+        <button class="btn" id="exportBtn">Export</button>
+        <button class="btn" id="importBtn">Import</button>
+      </div>
+      <div class="filters" id="filters" aria-label="Checklist filters">
+        <button class="filter-chip active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="npc">NPCs</button>
+        <button class="filter-chip" data-filter="boss">Bosses</button>
+        <button class="filter-chip" data-filter="armor">Armor</button>
+        <button class="filter-chip" data-filter="gear">Gear</button>
+        <button class="filter-chip" data-filter="spirit">Spirits</button>
+        <button class="filter-chip" data-filter="transform">Transformations</button>
+        <button class="filter-chip" data-filter="curio">Curios</button>
+        <button class="filter-chip" data-filter="collectible">Collectibles</button>
+        <button class="filter-chip" data-filter="quest">Quests</button>
+        <button class="filter-chip" data-filter="secret">Secrets</button>
+        <button class="filter-chip" data-filter="miss">Missables</button>
+      </div>
+    </div>
+    <aside class="panel panel-pad side">
+      <h3>How it works</h3>
+      <p>Tick tasks as you play. Progress is stored in your browser only, just like the original checklist concept.</p>
+      <button class="btn red" id="resetBtn">Reset this profile</button>
+    </aside>
+  </div>
+
+  <section id="playthrough">
+    <div class="section-title"><h2>Playthrough Checklist</h2><small>Recommended broad order; exploration can vary.</small></div>
+    <div class="toc" id="toc"></div>
+    <div id="chapters"></div>
+  </section>
+
+  <section id="checklists">
+    <div class="section-title"><h2>Completion Checklists</h2></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>Secret Ending Route</h3>
+        <ul>
+          <li>Complete Ancient Guanyin Temple in Chapter 1.</li>
+          <li>Complete Kingdom of Sahali in Chapter 2.</li>
+          <li>Finish the Treasure Hunter quest in Chapter 3.</li>
+          <li>Complete Purple Cloud Mountain in Chapter 4.</li>
+          <li>Complete Bishui Cave in Chapter 5.</li>
+          <li>Return to the Great Pagoda and pursue Mount Mei before starting a New Cycle.</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Four Vessels</h3>
+        <ul>
+          <li>Fireproof Mantle — Chapter 1 secret area.</li>
+          <li>Wind Tamer — Chapter 2 secret area.</li>
+          <li>Weaver's Needle — Chapter 4 secret area.</li>
+          <li>Plantain Fan — Chapter 5 story reward.</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>High-Risk Missables</h3>
+        <ul>
+          <li>Exhaust Horse Guai and Old Man dialogue in every relevant chapter before moving on.</li>
+          <li>Deal with Wandering Wight before resolving the Chapter 1 bell-secret path.</li>
+          <li>Break Venom Daoist's extra arms during the first Chapter 4 fight for Venomous Armguard.</li>
+          <li>Finish Purple Talismans, Daoist Mi and other Purple Cloud Mountain content before Chapter 4's finale.</li>
+          <li>Do not choose “Enter a New Cycle” until cleanup is finished.</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>NPC Priority List</h3>
+        <ul>
+          <li>Horse Guai (Ma Tianba) — exhaust dialogue Chapter 1 through 5; finish his cart interaction after Chapter 5.</li>
+          <li>Old Man / Yuan Shoucheng — speak whenever he appears before advancing chapters.</li>
+          <li>Shen Monkey — Gourd, Drink and Soak progression.</li>
+          <li>Xu Dog — medicines and Celestial Medicines.</li>
+          <li>Chen Loong — unlocks Zodiac Village through the Ruyi Scroll quest.</li>
+          <li>Yin Tiger — armor upgrades, Iron-Tough armor and Ebon Flow.</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Important Armor / Gear</h3>
+        <ul>
+          <li>Pilgrim set — useful early mobility/exploration option.</li>
+          <li>Iron-Tough set — unlocked through Yin Tiger in Zodiac Village.</li>
+          <li>Venomous Armguard — missable Chapter 4 boss-part break reward.</li>
+          <li>Bull King set — Bishui Cave reward path; full set requires NG+ materials.</li>
+          <li>Wukong mythical set — four Chapter 6 boss rewards used before claiming Jingubang.</li>
+          <li>Fireproof Mantle, Wind Tamer, Weaver's Needle and Plantain Fan — major Vessel milestones.</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Four Loongs</h3>
+        <ul>
+          <li>Get Loong Scales from the hidden wall in Chapter 2.</li>
+          <li>Red Loong — revisit Chapter 1.</li>
+          <li>Black Loong — Chapter 2, Rockrest Flat.</li>
+          <li>Cyan Loong — Chapter 3, Turtle Island.</li>
+          <li>Yellow Loong — Chapter 4 after the first three; rewards Golden Lining and Golden Carp.</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Unique One-Run Missables</h3>
+        <ul>
+          <li>Auspicious Lantern — kill all 9 Lantern Wardens before Captain Wise-Voice.</li>
+          <li>Apramana Bat — defeat while Zhu Bajie is still with you at Bitter Lake.</li>
+          <li>Venomous Armguard — break Venom Daoist's extra arms in his first fight.</li>
+          <li>Stained Jade Gourd — defeat Scorpionlord before Duskveil.</li>
+          <li>Violet Hail — complete Daoist Mi before Duskveil.</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Five Skandhas</h3>
+        <ul>
+          <li>Form — Chapter 1.</li>
+          <li>Feeling — Chapter 2, from Shigandang.</li>
+          <li>Thought — Chapter 3.</li>
+          <li>Choice — Chapter 4.</li>
+          <li>Consciousness — Chapter 6, from Giant Shigandang.</li>
+          <li>Give all five to Xu Dog for the Five Skandhas Pill.</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Cleanup Before NG+</h3>
+        <ul>
+          <li>Finish Journal portraits, Curios, Gourds, Drinks, Soaks, Spirits and Transformations you care about.</li>
+          <li>Finish remaining side quests and hidden bosses.</li>
+          <li>Use Keeper's Shrines to revisit earlier chapters.</li>
+          <li>Export this checklist if you want a backup.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="information">
+    <div class="section-title"><h2>Information</h2></div>
+    <div class="info-grid">
+      <div class="info-card"><h3>Progress Philosophy</h3><p>This is a compact companion, not a frame-by-frame walkthrough. It prioritizes decisions, optional content and major rewards that are easy to forget while exploring.</p></div>
+      <div class="info-card"><h3>Save Behavior</h3><p>Profiles and checks are stored in <code>localStorage</code>. Nothing is uploaded. Use Export before clearing browser data.</p></div>
+    </div>
+  </section>
+
+  <section id="help">
+    <div class="section-title"><h2>Help</h2></div>
+    <details open><summary>Is this a full walkthrough?</summary><p>No. It is intentionally formatted like a playthrough cheat sheet: short actionable reminders instead of long route explanations.</p></details>
+    <details><summary>Do I have to follow this exact order?</summary><p>No. Black Myth: Wukong allows revisiting earlier chapters from Keeper's Shrines, and many optional encounters can be done in different orders.</p></details>
+    <details><summary>Can I track multiple runs?</summary><p>Yes. Use Add/Edit in the header to create profiles for different characters or NG+ cycles.</p></details>
+    <details><summary>Can I back up progress?</summary><p>Yes. Export downloads a JSON backup. Import restores that file into this browser.</p></details>
+  </section>
+</main>
+
+<footer><div class="wrap">Fan-made checklist. Black Myth: Wukong and related names are property of their respective owners. Guide facts cross-checked against public walkthrough resources.</div></footer>
+
+<div class="modal" id="profileModal">
+  <div class="modal-card">
+    <h3 id="modalTitle">Profile</h3>
+    <input id="profileName" maxlength="40" placeholder="Profile name" />
+    <div class="modal-actions"><button class="btn" id="cancelModal">Cancel</button><button class="btn" id="saveProfile">Save</button></div>
+  </div>
+</div>
+<input type="file" id="importFile" accept="application/json" hidden />
+
+<script>
+const chapters = [
+{
+  id:"c1", title:"Chapter 1 — Black Cloud, Red Fire", region:"Black Wind Mountain", tasks:[
+  ["Defeat Bullguard and unlock Immobilize.","boss gear"],
+  ["Pick up the Skandha of Form from the Buddha-head rock near Front Hills for the later Five Skandhas quest.","collectible secret"],
+  ["Find Guangzhi in the Forest of Wolves; defeat him and claim the Red Tides transformation.","boss gear"],
+  ["Defeat Wandering Wight before resolving the Chapter 1 bell-secret route; collect its Spirit later if needed after gaining guidance.","boss miss gear"],
+  ["Find the Horse Guai (Ma Tianba) in Bamboo Grove > Back Hills and exhaust all dialogue before leaving Chapter 1.","npc quest miss"],
+  ["Meet the Old Man / Yuan Shoucheng encounter for this chapter and exhaust his dialogue before advancing.","npc quest miss"],
+  ["Rescue Shen Monkey near Marsh of White Mist, follow him into the cave, and talk to him; use him to upgrade Gourds and Drinks.","npc gear"],
+  ["Craft the Pilgrim armor set once it becomes available at a Keeper's Shrine; it is a strong early exploration/sprint set and is needed for full armor collection.","armor gear"],
+  ["Ring the bell behind Guangzhi's arena.","secret quest"],
+  ["Defeat Lingxuzi at Guanyin Temple.","boss"],
+  ["Explore Bamboo Grove and defeat Guangmou.","boss"],
+  ["Ring the bell near Guangmou.","secret quest"],
+  ["Defeat Whiteclad Noble and explore the side path before continuing.","boss"],
+  ["Ring the third bell to enter Secret: Ancient Guanyin Temple.","secret quest"],
+  ["Defeat Elder Jinchi; claim the Fireproof Mantle afterward.","boss secret gear"],
+  ["Defeat Black Wind King.","boss"],
+  ["Defeat Black Bear Guai and finish the chapter.","boss"],
+  ["After obtaining Loong Scales in Chapter 2, return to Outside the Forest and defeat Red Loong behind the waterfall.","boss secret quest collectible"]
+]},
+{
+  id:"c2", title:"Chapter 2 — Yellow Sand, Desolate Dusk", region:"Yellow Wind Ridge", tasks:[
+  ["Find the Horse Guai in Sandgate Village and exhaust all dialogue before leaving Chapter 2.","npc quest miss"],
+  ["Find the Old Man / Yuan Shoucheng encounter for this chapter and exhaust all dialogue before advancing.","npc quest miss"],
+  ["Defeat Lang-Li-Guhh-Baw, then talk to Xu Dog and exhaust his dialogue to start his medicine-related progression.","boss npc quest"],
+  ["Later find Xu Dog at Crouching Tiger Temple > Cellar; unlock Celestial Medicines and spend Mind Cores if desired.","npc gear"],
+  ["During the King of Flowing Sands / Second Rat Prince encounter, kill the small King first if you want the Second Rat Prince Spirit.","boss miss gear"],
+  ["Explore Sandgate Village and defeat the major gate encounters.",""],
+  ["In the First Prince of Flowing Sands arena, break the Buddha-covered wall and loot Loong Scales; Wandering Wight or Azure Dust can break it if the boss did not.","quest secret collectible"],
+  ["Collect the Buddha's Eyeballs around Fright Cliff for the hidden stone encounter.","secret quest"],
+  ["Defeat Stone Vanguard.","boss"],
+  ["Use the Buddha's Eyeballs at the Stone Vanguard arena to trigger Shigandang.","boss secret"],
+  ["Defeat Shigandang and keep the Skandha of Feeling for the Five Skandhas quest.","boss collectible secret"],
+  ["Complete the Man-in-Stone questline; defeat him, rest, then return and check his wares.","npc quest gear"],
+  ["Defeat Tiger Vanguard at Crouching Tiger Temple.","boss"],
+  ["With Loong Scales, visit Rockrest Flat and defeat Black Loong behind the sand waterfall.","boss secret quest collectible"],
+  ["Start the drunken boar / Yellow-Robed Squire quest; obtain and deliver the Sobering Stone.","npc quest secret"],
+  ["Continue the boar's dialogue at Crouching Tiger Temple, then return to his original area.","npc quest secret"],
+  ["Enter the Secret: Kingdom of Sahali.","secret quest"],
+  ["Defeat the secret Tiger Vanguard and then Fuban; obtain Wind Tamer.","boss secret gear"],
+  ["Complete the Old Rattle-Drum quest if you are collecting hidden bosses and Journal entries.","quest secret"],
+  ["Defeat Yellow Wind Sage and finish the chapter.","boss"]
+]},
+{
+  id:"c3", title:"Chapter 3 — White Snow, Ice Cold", region:"The New West", tasks:[
+  ["Find the Horse Guai during Chapter 3 and exhaust all dialogue before leaving the chapter.","npc quest miss"],
+  ["Find the Old Man / Yuan Shoucheng encounter for this chapter and exhaust all dialogue before advancing.","npc quest miss"],
+  ["Defeat Kang-Jin Loong and enter the Pagoda Realm.","boss"],
+  ["BEFORE defeating Captain Wise-Voice, kill all 9 Lantern Wardens during the red-eye Pagoda curse phases to obtain the missable Auspicious Lantern Curio.","curio miss collectible"],
+  ["Progress through Pagoda Realm and defeat Captain Wise-Voice.","boss"],
+  ["Collect Captain spirits needed for the prisoner / Third Prince quest as you explore, then return to the prisoner.","npc quest gear"],
+  ["Reach Turtle Island and defeat Kang-Jin Star.","boss"],
+  ["With Loong Scales, find and defeat Cyan Loong on Turtle Island.","boss secret quest collectible"],
+  ["At Bitter Lake, defeat Chen Loong, talk to him afterward, and exhaust his dialogue.","boss npc quest"],
+  ["While Zhu Bajie is still accompanying you at North Shore of the Bitter Lake, defeat Apramana Bat; its Spirit is awarded after Chapter 3.","boss spirit miss collectible"],
+  ["Visit Xu Dog for the Special-made Bone Strengthening Pellet, then return it to Chen Loong.","npc quest"],
+  ["Unlock Ruyi Scroll / Zodiac Village. Speak with Chen Loong, Shen Monkey, Xu Dog and Yin Tiger there.","npc quest secret"],
+  ["Use Chen Loong's seed planting and revisit his harvest basket after enough in-game time passes.","npc quest"],
+  ["Talk to Yin Tiger to unlock armor upgrading; upgrade at least one important set when materials allow.","npc armor gear"],
+  ["Challenge and defeat Yin Tiger to obtain Ebon Flow and unlock crafting of the Iron-Tough armor set.","boss npc armor gear secret"],
+  ["Start the Treasure Hunter quest in Bitter Lake and exhaust his dialogue.","npc quest secret"],
+  ["Find the Treasure Hunter again; use Ring of Fire to advance his quest.","npc quest secret"],
+  ["Reach Melon Field and defeat Green-Capped Martialist; obtain Spell Binder.","boss quest secret gear"],
+  ["At Mindfulness Cliff, collect the Skandha of Thought from the hidden Buddha-head path for the Five Skandhas quest.","collectible secret"],
+  ["Complete the Fox quest in the temple area before leaving the chapter.","npc quest"],
+  ["Defeat Yellowbrow and finish the chapter.","boss"],
+  ["Remember the Great Pagoda: its deeper secret becomes relevant after the other required secret routes are complete.","secret"]
+]},
+{
+  id:"c4", title:"Chapter 4 — Rosy Cheeks, Gray Hair", region:"Webbed Hollow", tasks:[
+  ["Find the Horse Guai during Chapter 4 and exhaust all dialogue before leaving the chapter.","npc quest miss"],
+  ["Find the Old Man / Yuan Shoucheng encounter for this chapter and exhaust all dialogue before advancing.","npc quest miss"],
+  ["Explore Webbed Hollow and defeat Second Sister.","boss"],
+  ["At The Purifying Spring, collect the Skandha of Choice from the Buddha head beside the pond.","collectible secret"],
+  ["When fighting Venom Daoist the first time, break enough of his extra arms before killing him to obtain the missable Venomous Armguard.","boss armor miss"],
+  ["Defeat Venom Daoist the first time.","boss miss"],
+  ["Advance all four Purple Talisman / altar interactions before defeating Hundred-Eyed Daoist Master.","quest npc miss"],
+  ["Find and defeat Venom Daoist the second time before the chapter's final boss.","boss miss"],
+  ["If Red, Black and Cyan Loong are defeated, find Yellow Loong at Relief of the Fallen Loong and defeat him for Golden Lining and Golden Carp.","boss transform curio secret quest collectible"],
+  ["Enter Secret: Purple Cloud Mountain.","secret miss"],
+  ["Speak to the red snake on the tree near the secret area's entrance and exhaust dialogue.","npc quest miss"],
+  ["Meet Daoist Mi at Petalfall Hamlet and exhaust his dialogue before fighting Duskveil.","npc quest miss"],
+  ["Farm the yellow-robed villagers for Violet Hail, give it to Daoist Mi, then defeat him to complete his quest and gain the transformation.","boss npc quest gear miss"],
+  ["Defeat Scorpionlord before Duskveil; he otherwise dies during that encounter. Claim his Stained Jade Gourd reward.","boss miss gear collectible"],
+  ["Defeat Duskveil; obtain Weaver's Needle.","boss secret gear"],
+  ["Return to the main route and defeat Hundred-Eyed Daoist Master.","boss"],
+  ["Craft / upgrade strong Chapter 4 armor options as they unlock; prioritize pieces that complement your stance/spell build rather than crafting everything immediately.","armor gear"],
+  ["Finish any Purple Cloud Mountain cleanup before leaving Chapter 4.","miss"]
+]},
+{
+  id:"c5", title:"Chapter 5 — Golden Child, Crimson Blood", region:"Flaming Mountains", tasks:[
+  ["Find the Horse Guai in Chapter 5 at the Element Cart location; exhaust all available dialogue / interactions before finishing the chapter.","npc quest miss"],
+  ["Find the Old Man / Yuan Shoucheng encounter for this chapter and exhaust all dialogue before advancing.","npc quest miss"],
+  ["Defeat Pale-Axe Stalwart, then talk to him after the fight and exhaust dialogue.","boss npc quest secret"],
+  ["Rest / progress and speak with Pale-Axe Stalwart again when he relocates.","npc quest secret"],
+  ["Defeat the encountered Five Element Carts as you move through the chapter.","boss quest"],
+  ["After Crimson-Silver Cart, check for Pale-Axe Stalwart dialogue again.","npc quest secret"],
+  ["Reach Fallen Furnace Crater, then backtrack when the route changes to find Rusty-Gold Cart.","boss secret"],
+  ["Use the opened ice path to enter Secret: Bishui Cave.","secret"],
+  ["Loot the Bull King's Iron Horn available in Bishui Cave and defeat Bishui Golden-Eyed Beast for more horns.","gear armor secret"],
+  ["Defeat Bishui Golden-Eyed Beast; unlock the Bull King armor crafting path. Full-set crafting requires additional horns in NG+.","boss armor secret"],
+  ["Defeat Red Boy / Yaksha King and finish the chapter.","boss"],
+  ["Receive the Plantain Fan as the chapter's Vessel reward.","gear secret"],
+  ["After Chapter 5 is complete and Chapter 6 has begun, return to the Horse Guai's Chapter 5 cart and pull the string to finish his quest and obtain Dark Thunder.","npc quest transform gear miss collectible"]
+]},
+{
+  id:"c6", title:"Chapter 6 — Unfinished", region:"Mount Huaguo", tasks:[
+  ["Explore Foothills and unlock Somersault Cloud.","gear"],
+  ["Hunt the major optional bosses across the open region before the finale.","boss"],
+  ["If you collected the first four Skandhas, find and defeat Giant Shigandang; climb its arm afterward to obtain the Skandha of Consciousness.","boss collectible secret"],
+  ["Take all five Skandhas to Xu Dog in Zodiac Village to receive the Five Skandhas Pill, which raises health, mana and stamina.","npc quest gear collectible"],
+  ["Defeat Gold Armored Rhino and obtain the Gold Suozi Armor.","boss armor"],
+  ["Defeat Cloudtreading Deer and obtain the Lotus Silk Cloudtreaders.","boss armor"],
+  ["Complete the Feng-Tail General encounter and obtain the Golden Feng-Tail Crown.","boss armor"],
+  ["Defeat Emerald-Armed Mantis and obtain the Dian-Cui Loong-Soaring Bracers.","boss armor"],
+  ["Find the hidden chest containing the alternate common-rarity Wukong armor pieces if you are pursuing full armor collection.","armor secret"],
+  ["Equip the four mythical Wukong armor pieces and reach Water Curtain Cave to obtain Jingubang.","armor gear"],
+  ["Before committing to NG+, verify Chapters 1, 2, 4 and 5 secret areas are complete.","miss"],
+  ["Verify the Chapter 3 Treasure Hunter quest is complete.","miss quest"],
+  ["Return to the Great Pagoda and enter Mount Mei when available.","secret"],
+  ["Defeat Erlang, the Sacred Divinity and complete the Mount Mei sequence.","boss secret"],
+  ["Return to Mount Huaguo and complete the final boss sequence.","boss"],
+  ["Use Continue Journey for cleanup; do not Enter a New Cycle until NPC, armor, Journal and collectible cleanup is finished.","miss"]
+]}
+];
+
+const state = {
+  profiles: JSON.parse(localStorage.getItem("wukongProfiles") || '["Journey 1"]'),
+  active: localStorage.getItem("wukongActive") || "Journey 1",
+  checks: JSON.parse(localStorage.getItem("wukongChecks") || "{}")
+};
+if(!state.profiles.includes(state.active)) state.active=state.profiles[0];
+
+function key(ch, i){return `${ch.id}:${i}`}
+function current(){return state.checks[state.active] || (state.checks[state.active]={})}
+function save(){
+  localStorage.setItem("wukongProfiles", JSON.stringify(state.profiles));
+  localStorage.setItem("wukongActive", state.active);
+  localStorage.setItem("wukongChecks", JSON.stringify(state.checks));
+}
+function profileOptions(){
+  const s=document.getElementById("profileSelect"); s.innerHTML="";
+  state.profiles.forEach(p=>{let o=document.createElement("option");o.value=o.textContent=p;s.appendChild(o)});
+  s.value=state.active;
+}
+function render(){
+  profileOptions();
+  const toc=document.getElementById("toc"), root=document.getElementById("chapters");
+  toc.innerHTML=""; root.innerHTML="";
+  chapters.forEach(ch=>{
+    const a=document.createElement("a");a.href="#"+ch.id;a.textContent=ch.title.replace("Chapter ","Ch. ");
+    toc.appendChild(a);
+    const box=document.createElement("article");box.className="chapter";box.id=ch.id;
+    box.innerHTML=`<div class="chapter-head"><div><h3>${ch.title}</h3><div class="meta">${ch.region}</div></div><span class="pill chapter-count"></span></div><div class="chapter-body"></div>`;
+    const body=box.querySelector(".chapter-body");
+    ch.tasks.forEach((t,i)=>{
+      const row=document.createElement("label");row.className="task";row.dataset.text=t[0].toLowerCase();
+      const tags=t[1].split(" ").filter(Boolean);
+      row.dataset.tags=tags.join(" ");
+      const tagNames={miss:"MISSABLE",npc:"NPC",boss:"BOSS",armor:"ARMOR",gear:"GEAR",quest:"QUEST",secret:"SECRET",spirit:"SPIRIT",transform:"TRANSFORM",curio:"CURIO",collectible:"COLLECTIBLE"};
+      const tagHtml=tags.map(x=>`<span class="tag ${x}">${tagNames[x]||x.toUpperCase()}</span>`).join(" ");
+      row.innerHTML=`<input type="checkbox" ${current()[key(ch,i)]?"checked":""}><span class="task-text">${t[0]}</span><span>${tagHtml}</span>`;
+      if(current()[key(ch,i)]) row.classList.add("done");
+      row.querySelector("input").addEventListener("change",e=>{
+        current()[key(ch,i)]=e.target.checked; row.classList.toggle("done",e.target.checked); save(); updateStats();
+      });
+      body.appendChild(row);
+    });
+    box.querySelector(".chapter-head").addEventListener("click",()=>box.classList.toggle("collapsed"));
+    root.appendChild(box);
+  });
+  updateStats();
+}
+function updateStats(){
+  let total=0,done=0,bossDone=0,secretDone=0,completedCh=0;
+  chapters.forEach(ch=>{
+    let cd=0;
+    ch.tasks.forEach((t,i)=>{
+      total++; const d=!!current()[key(ch,i)]; if(d){done++;cd++}
+      if(d && t[1].includes("boss")) bossDone++;
+    });
+    if(cd===ch.tasks.length) completedCh++;
+    const badge=document.querySelector(`#${ch.id} .chapter-count`);
+    if(badge) badge.textContent=`${cd}/${ch.tasks.length}`;
+  });
+  const secretChapterIds=["c1","c2","c3","c4","c5"];
+  const secretCompletionChecks={
+    c1:"Defeat Elder Jinchi", c2:"Defeat the secret Tiger Vanguard", c3:"Defeat Green-Capped Martialist",
+    c4:"Defeat Duskveil", c5:"Defeat Bishui Golden-Eyed Beast"
+  };
+  secretChapterIds.forEach(cid=>{
+    const ch=chapters.find(c=>c.id===cid);
+    const idx=ch.tasks.findIndex(t=>t[0].startsWith(secretCompletionChecks[cid]));
+    if(idx>=0 && current()[key(ch,idx)]) secretDone++;
+  });
+  document.getElementById("progressText").textContent=`${done} / ${total}`;
+  document.getElementById("progressFill").style.width=(total?done/total*100:0)+"%";
+  document.getElementById("chapterStat").textContent=`${completedCh}/6`;
+  document.getElementById("secretStat").textContent=`${secretDone}/5`;
+  document.getElementById("bossStat").textContent=bossDone;
+}
+document.getElementById("profileSelect").addEventListener("change",e=>{state.active=e.target.value;save();render()});
+let mode="add";
+function openModal(m){
+  mode=m; document.getElementById("modalTitle").textContent=m==="add"?"Add profile":"Rename profile";
+  document.getElementById("profileName").value=m==="edit"?state.active:"";
+  document.getElementById("profileModal").classList.add("open");
+  setTimeout(()=>document.getElementById("profileName").focus(),50);
+}
+document.getElementById("addProfile").onclick=()=>openModal("add");
+document.getElementById("editProfile").onclick=()=>openModal("edit");
+document.getElementById("cancelModal").onclick=()=>document.getElementById("profileModal").classList.remove("open");
+document.getElementById("saveProfile").onclick=()=>{
+  const name=document.getElementById("profileName").value.trim(); if(!name)return;
+  if(mode==="add"){
+    if(state.profiles.includes(name))return alert("That profile already exists.");
+    state.profiles.push(name); state.active=name;
+  } else {
+    if(name!==state.active && state.profiles.includes(name))return alert("That profile already exists.");
+    const old=state.active; state.profiles[state.profiles.indexOf(old)]=name; state.checks[name]=state.checks[old]||{}; if(name!==old)delete state.checks[old];state.active=name;
+  }
+  save();document.getElementById("profileModal").classList.remove("open");render();
+};
+let activeFilter="all";
+function applyFilters(){
+  const q=document.getElementById("search").value.toLowerCase().trim();
+  document.querySelectorAll(".chapter").forEach(ch=>{
+    let visible=0;
+    ch.querySelectorAll(".task").forEach(t=>{
+      const textOk=!q||t.dataset.text.includes(q);
+      const filterOk=activeFilter==="all" || t.dataset.tags.split(" ").includes(activeFilter);
+      const ok=textOk&&filterOk;
+      t.classList.toggle("hidden",!ok);
+      if(ok)visible++;
+    });
+    ch.classList.toggle("hidden",visible===0);
+    if((q||activeFilter!=="all")&&visible)ch.classList.remove("collapsed");
+  });
+}
+document.getElementById("search").addEventListener("input",applyFilters);
+document.querySelectorAll(".filter-chip").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    activeFilter=btn.dataset.filter;
+    document.querySelectorAll(".filter-chip").forEach(x=>x.classList.toggle("active",x===btn));
+    applyFilters();
+  });
+});
+document.getElementById("expandAll").onclick=()=>document.querySelectorAll(".chapter").forEach(x=>x.classList.remove("collapsed"));
+document.getElementById("collapseAll").onclick=()=>document.querySelectorAll(".chapter").forEach(x=>x.classList.add("collapsed"));
+document.getElementById("resetBtn").onclick=()=>{
+  if(confirm(`Reset all checks for "${state.active}"?`)){state.checks[state.active]={};save();render()}
+};
+document.getElementById("exportBtn").onclick=()=>{
+  const blob=new Blob([JSON.stringify({version:1,profiles:state.profiles,active:state.active,checks:state.checks},null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="wukong-cheat-sheet-backup.json";a.click();URL.revokeObjectURL(a.href);
+};
+document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
+document.getElementById("importFile").addEventListener("change",async e=>{
+  const f=e.target.files[0];if(!f)return;
+  try{
+    const x=JSON.parse(await f.text());
+    if(!Array.isArray(x.profiles)||!x.checks)throw new Error();
+    state.profiles=x.profiles;state.active=x.active||x.profiles[0];state.checks=x.checks;save();render();
+  }catch{alert("Could not import that backup file.");}
+  e.target.value="";
+});
+render();
+</script>
+</body>
+</html>
