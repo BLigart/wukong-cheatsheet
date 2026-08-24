@@ -9,6 +9,9 @@ Open `index.html` in any modern browser.
 Upload `index.html` to any static host (GitHub Pages, Netlify, Cloudflare Pages, etc.).
 
 ## Features
+- Optional Power Route filter with chapter-by-chapter skill, upgrade and build advice
+- Boss-specific loadout reminders for major difficulty spikes
+- Respec-friendly Smash/Immobilize/Cloud Step route plus Spell Binder burst variant
 - Samsung Internet / Galaxy mobile overflow fixes; Import and Export remain visible on phones
 - Mobile-first phone layout with larger tap targets
 - Sticky bottom navigation and one-tap "Next unchecked"
