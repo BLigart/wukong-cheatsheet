@@ -1,214 +1,71 @@
-# Black Myth: Wukong — 100% Linear Checklist
+# Black Myth: Wukong — Refined Completion Checklist
 
-A mobile-first, spoiler-heavy completion companion for **Black Myth: Wukong**.
+A mobile-first, spoiler-heavy companion for the base campaign and New Game+. The `develop` revision contains **375 route steps**, up from 325, with clearer directions, quest hand-ins, prerequisite order and collection checkpoints.
 
-The project turns a full playthrough into a chronological checklist so you can follow the game in a practical order without constantly switching between boss lists, quest guides, collectible guides, missable warnings, and build videos.
+Open **`index.html`** directly in a modern browser, or serve the repository as a static website. No framework, build, account or backend is needed.
 
-It is a **single self-contained HTML file**: no framework, no build step, no account, and no backend.
+## What changed in develop
 
-> **Warning:** this checklist contains major gameplay, boss, area, quest, item, and ending spoilers.
+- Added 50 steps and rewrote 75 existing steps, with further changes to their order.
+- Split the six Buddha’s Eyeballs, purple talismans, worm-feeding quest and important NPC hand-ins into actionable checks.
+- Corrected the Pagoda meditation order, Chapter 4 upper/lower route, Rakshasa Palace/Emerald Hall order, Ma Tianba reward timing and Preservation Orb backtrack.
+- Added or clarified missing drink, armor and curio opportunities. All 15 Vine acquisitions and 12 Wine Worm acquisitions, including merchant stock, now have individual route and Audit entries.
+- Put cutoff warnings before the action that can lock content out, and distinguished boss portraits from separately awarded Spirits.
+- Preserved existing check IDs, even when rows move. New steps begin unchecked.
+- Replaced prose-matching synchronization with explicit acquisition links, so a warning or recipe mention cannot award an item.
+- Fixed **Next** to find unfinished steps inside collapsed chapters without clearing your search or filters.
+- Labeled optional Deluxe equipment and excluded it from the core Audit total.
 
-<!--
-Add a screenshot to the repository and uncomment this line:
-![Black Myth: Wukong 100% Checklist](docs/screenshot-mobile.png)
--->
+See [the content review](docs/content-review.md) for corrections, sources and scope.
 
-## Features
+## Using the checklist
 
-- **Chronological Route** — ordered from the prologue through Chapters 1–6, secret content, endgame cleanup, and NG+.
-- **100% Audit** — collection-oriented cross-check for completion items that would make the main route too noisy.
-- **Bidirectional Route ↔ Audit sync** — checking a linked item in either view automatically updates the other view.
-- **Missable warnings** — timing-sensitive bosses, NPC dialogue, quest chains, one-run rewards, and points of no return are surfaced where they matter.
-- **Bosses and secret encounters** — main, optional, hidden, and secret-ending encounters are integrated into the route.
-- **NPC and quest tracking** — including chapter-dependent dialogue and multi-step quest chains.
-- **Completion systems** — Spirits, Curios, armor, weapons, transformations, Gourds, Drinks, Soaks, Meditation Spots, Seeds, Formulas, Celestial Pills, Key Items, Vessels, Skandhas, upgrade materials, and NG+ requirements.
-- **Direct Wukong Wiki links** — gold dotted names open the relevant Black Myth: Wukong Wiki detail page in a new tab.
-- **Become OP guide** — a chapter-by-chapter power route covering stance investment, Sparks, spells, Spirits, armor upgrades, weapons, Vessels, respec timing, and alternate endgame builds.
-- **Search and filters** — quickly isolate bosses, NPCs, missables, secrets, gear, collectibles, and more.
-- **Next unchecked** — jumps directly to the next unfinished visible route step.
-- **Multiple profiles** — useful for separate characters, fresh runs, or NG+ cycles.
-- **Automatic local saving** — progress is stored in the browser using `localStorage`.
-- **Backup / restore** — export progress as JSON and import it later or on another browser/device.
-- **Mobile-first UI** — designed primarily for phone use, with large touch targets, sticky controls, bottom navigation, safe-area handling, and horizontal filter chips.
+**Route** follows a practical chapter order. Named detours return to earlier shrines. Tick a pickup after obtaining it; seeing a recipe or attempting an RNG farm does not mean you own the item. Farming can be postponed to the endgame cleanup.
 
-## What “100%” Means Here
+**Audit** cross-checks inventory and quest completion. Linked route acquisitions update their Audit entries. Checking one Audit item completes a single linked route step only when all individually linked rewards for that step are checked. Multi-step quest aggregates do not check off conversations or new route steps for you. Unlinked crafted equipment and broad collection goals are manual checks.
 
-The checklist is aimed at **full journal / trophy / achievement-style completion plus unique equipment and meaningful one-time content**.
+**Guide** retains the chapter build suggestions and general reference links. Researched route changes also have direct source links underneath the step. External links do not toggle checkboxes.
 
-It does **not** require you to:
+Use search, category filters, Hide done, chapter jumps, Next, and chapter/subchapter Check all / Uncheck all to navigate. Bulk actions apply to the visible filtered rows in that group.
 
-- open every generic Will chest,
-- collect every common crafting-material pickup,
-- farm duplicate copies of equipment,
-- clear every ordinary enemy spawn.
+The first normal-ending section is **optional**, for seeing both ending scenes. For only the secret ending, complete Mount Mei before the final encounter. Use **Continue Journey** afterward to finish cleanup before **Enter a New Cycle**.
 
-RNG-dependent drops are placed at sensible farming checkpoints and can generally be postponed to the Chapter 6 cleanup phase if you prefer.
+## Existing progress and backups
 
-## Build Guide: Becoming OP
+The app retains the `bmw100Linear.v3` browser storage key and freezes every legacy Route and Audit ID. The state format is version 4. Version 3 backups remain importable, including all their profiles. Loading or importing does not infer that newly added steps are complete.
 
-The built-in **Guide** page contains a first-playthrough power roadmap rather than a single static endgame build.
+Progress belongs to the browser and origin that saved it. A branch preview, downloaded file and production website can each have separate storage. Export from the old app using **More → Export backup**, then import into the revised app when changing origin. Checklist backups do not back up the game save.
 
-The default recommendation is built around:
+An edited legacy step retains its check, so review newly clarified conditions against your actual inventory if you checked a vague step in the old version. New prerequisites remain unchecked even when an older quest summary was marked complete.
 
-- **Smash Stance** as the main stance,
-- **Pilgrim Armor Set** as the main upgrade path,
-- **Immobilize + Cloud Step** as the safe general-purpose spell package,
-- **Wandering Wight** as a strong early Spirit,
-- **Spell Binder** as a boss-delete alternative once you know a moveset,
-- **Golden Armor + Qi / Vessel cycling** as a control-focused alternative,
-- **Jingubang + Wukong armor** as an easy Chapter 6 baseline,
-- **Bull King gear** as a later NG+ direction.
+## Completion scope
 
-The guide also explains **when to spend Sparks, what not to over-invest in, when to upgrade armor, when to respec, and how to avoid wasting rare materials across too many half-finished builds**.
+The checklist covers base-campaign bosses, main and side quests, secret areas, equipment and collectible systems, endings, and NG+ cleanup. It is not an inventory of every ordinary chest, enemy spawn or repeat material drop, and it does not cover the post-launch challenge reward catalog. Deluxe equipment is optional. Some full equipment collections require NG+ materials.
 
-## Running It
+Source guides occasionally disagree about patch behavior or optional encounter classifications. The route uses conservative early cutoffs and names known alternate quest outcomes where useful. A filled checklist is a companion to the in-game Journal and inventory, not a guarantee that every possible interaction is documented.
 
-### Option 1 — Open it directly
-
-Download `black_myth_wukong_100_checklist.html` and open it in a modern browser.
-
-That is all that is required.
-
-### Option 2 — Host with GitHub Pages
-
-For the cleanest GitHub Pages setup:
-
-1. Rename `black_myth_wukong_100_checklist.html` to `index.html`.
-2. Push `index.html` and this `README.md` to your repository.
-3. Open the repository on GitHub.
-4. Go to **Settings → Pages**.
-5. Under **Build and deployment**, choose **Deploy from a branch**.
-6. Select your default branch (usually `main`) and the repository root (`/`).
-7. Save the setting.
-
-GitHub will provide the public Pages URL after deployment.
-
-No package manager, server, database, or build command is required.
-
-## Saving Progress
-
-Checklist progress is stored locally in your browser with `localStorage`.
-
-This means:
-
-- progress is private to that browser/profile,
-- refreshing or closing the page does not normally erase progress,
-- clearing site/browser data can erase it,
-- a different browser or device has separate storage,
-- moving from a local `file://` copy to a hosted GitHub Pages version uses a different storage origin.
-
-Use **More → Export backup** periodically. The generated JSON backup can later be restored with **Import backup**.
-
-## Route and Audit Synchronization
-
-The Route and 100% Audit share completion state wherever a meaningful relationship exists.
-
-Examples:
-
-- checking an acquisition in the Route can automatically complete its Audit entry,
-- checking an Audit entry can complete its corresponding Route step,
-- unchecking either side reverses the linked state,
-- multi-step items only become complete when all required linked route steps are complete,
-- aggregate or crafted collection entries remain independent when there is no honest one-to-one route step.
-
-This avoids falsely marking a whole quest or collection complete because only one sub-step was finished.
-
-## Mobile Usage
-
-The UI was designed primarily for **Samsung Internet on a Galaxy S25 Ultra**, but it should work well in current Chromium-based browsers and other modern mobile browsers.
-
-Useful mobile controls:
-
-- tap almost anywhere on a checklist row to check/uncheck it,
-- use **Next** in the bottom navigation to jump to the next unfinished step,
-- swipe horizontally through category filters,
-- tap gold dotted names to open Wiki detail pages,
-- use profiles for separate runs,
-- export a backup before clearing browser data or moving devices.
-
-## Project Structure
+## Development and verification
 
 ```text
-.
-├── black_myth_wukong_100_checklist.html   # Entire application
-└── README.md                              # Project documentation
+index.html                  App, data, styles and persistence
+README.md                   Usage and compatibility
+docs/content-review.md      Research and correction notes
+tests/checklist.test.mjs     Content-order and progress regressions
+tests/legacy-ids.json        Frozen original save keys
 ```
 
-If you deploy through GitHub Pages, you may prefer:
+Run the dependency-free regression checks with Node.js:
 
-```text
-.
-├── index.html
-└── README.md
+```bash
+node --test tests/checklist.test.mjs
 ```
 
-## Technical Notes
+They verify stable IDs, acquisition coverage, critical route ordering, source/link integrity, material counts, synchronization, optional equipment and legacy backup imports. They do not simulate a game playthrough.
 
-The application intentionally stays simple:
+When editing content, preserve `id` values and assign a new descriptive ID to a genuinely new task. Do not derive IDs from the current row position or infer collection links by searching prose. Review `routeIds` whenever the meaning of an acquisition changes.
 
-- plain HTML,
-- plain CSS,
-- vanilla JavaScript,
-- no external JavaScript dependencies,
-- no backend,
-- no analytics,
-- no sign-in,
-- browser `localStorage` for progress,
-- JSON files for manual backup/restore.
+For GitHub Pages, select the branch you want to serve and the repository root in **Settings → Pages**. Merely pushing `develop` does not change a Pages site configured to publish `main`.
 
-The checklist data, Wiki entity mappings, synchronization rules, rendering logic, and UI are all contained in the same HTML file.
+## Credits
 
-## Research and Reference Sources
-
-The checklist is fan-curated and cross-checked against multiple public resources. The in-app Guide includes direct research links, including:
-
-- [Black Myth: Wukong Wiki](https://blackmythwukong.fandom.com/wiki/Black_Myth:_Wukong_Wiki) — entity, item, equipment, skill, and mechanic detail pages.
-- [PowerPyx — All Bosses](https://www.powerpyx.com/black-myth-wukong-boss-guide-all-bosses/) — chronological boss routing and rewards.
-- [PowerPyx — All Side Quests](https://www.powerpyx.com/black-myth-wukong-all-side-quests/) — quest NPCs, hidden encounters, and dialogue chains.
-- [PowerPyx — Trophy Guide & Roadmap](https://www.powerpyx.com/black-myth-wukong-trophy-guide-roadmap/) — missables and NG+ requirements.
-- [PowerPyx — Spirits](https://www.powerpyx.com/black-myth-wukong-all-spirits-locations/)
-- [PowerPyx — Curios](https://www.powerpyx.com/black-myth-wukong-all-curios-locations/)
-- [PowerPyx — Armor](https://www.powerpyx.com/black-myth-wukong-all-armor-locations/)
-- [PowerPyx — Weapons](https://www.powerpyx.com/black-myth-wukong-all-weapon-locations/)
-- [PowerPyx — Meditation Spots](https://www.powerpyx.com/black-myth-wukong-all-meditation-spots-locations/)
-- [Game8 — Missables & Points of No Return](https://game8.co/games/Black-Myth-Wukong/archives/469110)
-- [Game8 — Best Spells](https://game8.co/games/Black-Myth-Wukong/archives/468558)
-- [Epic Games — Best Skills Guide](https://store.epicgames.com/news/black-myth-wukong-guide-best-skills?lang=en-US)
-- [Gameranx — Pilgrim Armor Guide](https://gameranx.com/features/id/507197/article/black-myth-wukong-how-to-get-pilgrim-set-best-armor-guide/)
-
-External websites are maintained by their respective owners and their URLs/content may change independently of this project.
-
-## Contributing
-
-Corrections and improvements are welcome.
-
-Good contributions include:
-
-- fixing incorrect ordering,
-- correcting a missable condition,
-- adding a missing boss, NPC step, item, or collection entry,
-- fixing a broken Wiki detail link,
-- improving Route ↔ Audit synchronization,
-- improving mobile usability,
-- updating a build recommendation when game/community knowledge changes.
-
-When changing checklist data, please try to preserve these rules:
-
-1. **Route order comes first.** A user should be able to follow the checklist from top to bottom during an actual playthrough.
-2. **Missables belong where the decision happens.** Do not hide critical warnings only in an endgame cleanup section.
-3. **Do not overload the Route.** Large collections belong in the Audit unless their acquisition is important to progression or timing.
-4. **Sync only real relationships.** Do not make one checkbox complete an unrelated aggregate entry.
-5. **Keep mobile interaction intact.** Tapping Wiki links must not toggle checklist rows accidentally.
-6. **Prefer direct detail links.** Bosses, NPCs, gear, spells, and important items should link to their specific Wiki pages where available.
-
-## Disclaimer
-
-This is an unofficial, fan-made project and is not affiliated with or endorsed by Game Science, the game's publishers, Fandom, PowerPyx, Game8, Epic Games, Gameranx, or the maintainers of the referenced resources.
-
-**Black Myth: Wukong**, its characters, names, logos, game content, and related intellectual property belong to their respective owners. This project does not include or redistribute game assets.
-
-Guide information can contain mistakes or become outdated. Always feel free to open an issue or pull request with a correction.
-
-## License
-
-No open-source license is declared by this README. If you plan to allow redistribution, modification, or reuse of the project, add an explicit `LICENSE` file to the repository (for example, MIT or another license that matches your intent).
+Unofficial fan project; not affiliated with Game Science or the referenced guide publishers. Black Myth: Wukong and related intellectual property belong to their respective owners. No game assets are redistributed. No open-source license is declared.
